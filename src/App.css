@@ -1,10 +1,10 @@
 .ui-segment {
-  padding: 8em 0em ;
+  padding: 8em 0em !important ;
   
 }
 
 .ui-header {
-  font-size: 2em;
+  font-size: 2em !important;
 }
 
 .para-layout{
@@ -12,7 +12,7 @@
 }
 
 .footer-segment{
-  padding: 0em;
+  padding: 0em !important;
 }
 
 .grid-column{
@@ -22,7 +22,7 @@
 
 .ui-divider{
 
-  margin: 3em 0em;
+  margin: 3em 0em !important;
   text-transform: uppercase;
 }
 
@@ -35,10 +35,10 @@
 }
 
 .desktop-heading-home-h1 {
-  font-size:  3em;
+  font-size:  3em !important;
   font-weight: normal;
-  margin-bottom: 0;
-  margin-top: 3em;
+  margin-bottom: 0 !important;
+  margin-top: 3em !important;
 }
 
 .mobile-heading-home-h2 {
@@ -48,9 +48,9 @@
 }
 
 .desktop-heading-home-h2 {
-  font-size:  1.7em;
+  font-size:  1.7em !important;
   font-weight: normal;
-  margin-top: 1.5em;
+  margin-top: 1.5em !important;
 }
 
 /*end header */
@@ -61,6 +61,21 @@
 }
 
 .desktop-menu-segment {
-  min-height: 700;
-  padding: 1em 0em;
+  min-height: 700 !important;
+  padding: 1em 0em !important;
+ background-image: url('http://pluspng.com/img-png/hawaii-png-hd-idyllic-island-beach-shore-sky-nature-beautiful-footage-sea-water-vacation-travel-tourism-hawaii-peaceful-hd-3840.png') !important;
+  background-size: cover !important;
+  width: 100%;
+}
+
+.triv-logo {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.ui.secondary.inverted.pointing.menu {
+  /* border-width: 2px; */
+  /* border-color: rgba(34,36,38,.15); */
+  border: none;
 }

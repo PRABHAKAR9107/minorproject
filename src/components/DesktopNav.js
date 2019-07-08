@@ -7,8 +7,10 @@ import {
     Responsive,
     Segment,
     Visibility,
+    Image,
 } from 'semantic-ui-react'
 import HomepageHeading from './Header'
+import logo from '../data_image_svg+xml;….svg'
 
 const getWidth = () => {
     const isSSR = typeof window === 'undefined'
@@ -25,7 +27,6 @@ class DesktopContainer extends Component {
     render() {
         const { children } = this.props
         const { fixed } = this.state
-
         return (
             <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
                 <Visibility
@@ -45,21 +46,16 @@ class DesktopContainer extends Component {
                             pointing={!fixed}
                             secondary={!fixed}
                             size='large'
+                            borderless
                         >
                             <Container>
-                                <Menu.Item as='a' active>
-                                    Home
-                  </Menu.Item>
-                                <Menu.Item as='a'>Work</Menu.Item>
-                                <Menu.Item as='a'>Company</Menu.Item>
-                                <Menu.Item as='a'>Careers</Menu.Item>
+                                <Menu.Item as='a' href='https://magazine.trivago.com/' target='_blank'>
+                                    <Image src={logo} size='medium' className='triv-logo'></Image>
+                                </Menu.Item>
                                 <Menu.Item position='right'>
                                     <Button as='a' inverted={!fixed}>
                                         Log in
-                    </Button>
-                                    <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
-                                        Sign Up
-                    </Button>
+                                    </Button>
                                 </Menu.Item>
                             </Container>
                         </Menu>
