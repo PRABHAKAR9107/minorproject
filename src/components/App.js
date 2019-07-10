@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import ResponsiveContainer from './ResponsiveContainer'
 import {
   Button,
@@ -8,59 +8,46 @@ import {
   Header,
   Image,
   List,
-  Segment,
+  Segment, Card,
+  Icon,
+
 } from 'semantic-ui-react'
-import { reject } from 'q';
+import Fetch from '../helpers/Fetch'
+import { Link, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config'
+import routes from './routes';
+import Cards from './Card'
 
 class HomepageLayout extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      data: [],
+    };
   }
 
   componentDidMount() {
-    fetch('http://trivago-magazine-work-sample-server.s3-website.eu-central-1.amazonaws.com/latest_posts.json', {
-      method: 'GET',
-      mode: 'cors',
+    const parsedJson = Fetch('http://trivago-magazine-work-sample-server.s3-website.eu-central-1.amazonaws.com/latest_posts.json')
+    parsedJson.then(value => {
+      this.setState({
+        data: value
+      })
     })
-      .then(data => data.json())
-      .then(data => console.log(data))
-      .catch(e => reject(e))
   }
   render() {
     return (
       <ResponsiveContainer>
         <Segment className='ui-segment' vertical>
-          <Grid container stackable verticalAlign='middle'>
-            <Grid.Row>
-              <Grid.Column width={8}>
-                <Header as='h3' className='ui-header'>
-                  We Help Companies and Companionsgv
-            </Header>
-                <p className='para-layout'>
-                  We can give your company superpowers to do things that they never thought possible.
-                  Let us delight your customers and empower your needs... through pure data analytics.
-            </p>
-                <Header as='h3' className='ui-header'>
-                  We Make Bananas That Can Dance
-            </Header>
-                <p className='para-layout'>
-                  Yes that's right, you thought it was the stuff of dreams, but even bananas can be
-                  bioengineered.
-            </p>
+          <Grid columns={3} doubling stackable>
+            {this.state.data.map(item => (
+              <Grid.Column>
+                <Link to='/article' >
+                  <Cards items={item} />
+                </Link>
               </Grid.Column>
-              <Grid.Column floated='right' width={6}>
-                <Image bordered rounded size='large' src='/images/wireframe/white-image.png' />
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column textAlign='center'>
-                <Button size='huge'>Check Them Out</Button>
-              </Grid.Column>
-            </Grid.Row>
+            ))}
           </Grid>
         </Segment>
-
         <Segment className='footer-segment' vertical>
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Row textAlign='center'>

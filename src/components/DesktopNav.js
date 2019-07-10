@@ -11,6 +11,7 @@ import {
 } from 'semantic-ui-react'
 import HomepageHeading from './Header'
 import logo from '../data_image_svg+xml;….svg'
+import { Link } from 'react-router-dom';
 
 const getWidth = () => {
     const isSSR = typeof window === 'undefined'
@@ -49,9 +50,11 @@ class DesktopContainer extends Component {
                             borderless
                         >
                             <Container>
-                                <Menu.Item as='a' href='https://magazine.trivago.com/' target='_blank'>
-                                    <Image src={logo} size='medium' className='triv-logo'></Image>
-                                </Menu.Item>
+                                <Link to='/'>
+                                    <Menu.Item as='a'>
+                                        <Image src={logo} size='medium' className='triv-logo'></Image>
+                                    </Menu.Item>
+                                </Link>
                                 <Menu.Item position='right'>
                                     <Button as='a' inverted={!fixed}>
                                         Log in

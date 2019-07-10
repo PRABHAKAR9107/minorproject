@@ -79,3 +79,11 @@
   /* border-color: rgba(34,36,38,.15); */
   border: none;
 }
+
+.ui.doubling.stackable.three.column.grid {
+  padding: 0em 2em !important;
+}
+
+.ui-card{
+  overflow: hidden;
+}
