@@ -1,6 +1,4 @@
-import
-Article
-    from './Article.js';
+import Article from './Article.js';
 import App from './App'
 
 export const defaultRoutes = [
@@ -10,11 +8,11 @@ export const defaultRoutes = [
         exact: true,
     },
     {
-        path: '/article',
+        path: '/article/:id',
         component: Article,
     },
 ];
-
+/* for nested routes */
 const routes = [
     {
         path: '/',

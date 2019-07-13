@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import ResponsiveContainer from './ResponsiveContainer'
 import {
   Button,
@@ -13,10 +13,10 @@ import {
 
 } from 'semantic-ui-react'
 import Fetch from '../helpers/Fetch'
-import { Link, Switch, BrowserRouter as Router } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config'
-import routes from './routes';
+import { Link } from 'react-router-dom';
+
 import Cards from './Card'
+import { pathToFileURL } from 'url';
 
 class HomepageLayout extends React.Component {
   constructor(props) {
@@ -39,16 +39,16 @@ class HomepageLayout extends React.Component {
       <ResponsiveContainer>
         <Segment className='ui-segment' vertical>
           <Grid columns={3} doubling stackable>
-            {this.state.data.map(item => (
+            {this.state.data.map((item, i) => (
               <Grid.Column>
-                <Link to='/article' >
+                <Link to={{ pathname: `/article/${item.id}`, state: { url: `${item.uri}` } }}>
                   <Cards items={item} />
                 </Link>
               </Grid.Column>
             ))}
           </Grid>
         </Segment>
-        <Segment className='footer-segment' vertical>
+        {/*<Segment className='footer-segment' vertical>
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Row textAlign='center'>
               <Grid.Column className='grid-column'>
@@ -69,7 +69,7 @@ class HomepageLayout extends React.Component {
             </Grid.Row>
           </Grid>
         </Segment>
-
+            
         <Segment className='ui-segment' vertical>
           <Container text>
             <Header as='h3' className='ui-header'>
@@ -105,7 +105,7 @@ class HomepageLayout extends React.Component {
         </Button>
           </Container>
         </Segment>
-
+            */}
         <Segment inverted vertical style={{ padding: '5em 0em' }}>
           <Container>
             <Grid divided inverted stackable>

@@ -3,10 +3,10 @@ import React from 'react'
 import DesktopContainer from './DesktopNav'
 import MobileContainer from './MobileNav'
 
-const ResponsiveContainer = ({ children }) => (
+const ResponsiveContainer = (props) => (
     <div>
-        <DesktopContainer>{children}</DesktopContainer>
-        <MobileContainer>{children}</MobileContainer>
+        <DesktopContainer data={props ? props.res : null}>{props.children}</DesktopContainer>
+        <MobileContainer>{props.children}</MobileContainer>
     </div>
 )
 

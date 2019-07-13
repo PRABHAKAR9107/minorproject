@@ -9,23 +9,60 @@ import {
     Image,
     List,
     Segment,
+    GridColumn,
 
 } from 'semantic-ui-react'
+import Fetch from '../helpers/Fetch'
+import { Link } from 'react-router-dom'
+import DesktopContainer from './DesktopNav'
 
 class Article extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            data: [],
         }
+        this.parseHTML = this.parseHTML.bind(this);
     }
     componentDidMount() {
-        console.log('Mounted')
+        const parsedJson = Fetch(this.props.location.state.url)
+        parsedJson.then(value => {
+            this.setState({
+                data: value
+            })
+        })
     }
+
+    parseHTML() {
+        let htmlString = this.state.data.content[0].text;
+        let doc = new DOMParser().parseFromString(htmlString, "text/xml");
+        let p = doc.firstChild.children[1];
+        return p.innerHTML;
+    }
+
     render() {
         return (
-            <ResponsiveContainer>
+            <ResponsiveContainer res={this.state.data}>
                 <Segment className='ui-segment' vertical>
+                    <Grid columns={2} doubling stackable>
+                        <Grid.Row>
+                            <Grid.Column width={8}>
+                                <Header as='h3' style={{ fontSize: '2em' }}>
+                                    {this.state.data.title}
+                                </Header>
+                                {this.state.data.content ? (
+                                    <p className='para-layout'>
+                                        {this.parseHTML()}
+                                    </p>
+                                )
+                                    : null}
+
+                            </Grid.Column>
+                            <Grid.Column floated='right' width={6}>
+                                <Image bordered rounded size='large' src='/images/wireframe/white-image.png' />
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
                 </Segment>
                 <Segment className='footer-segment' vertical>
                     <Grid celled='internally' columns='equal' stackable>

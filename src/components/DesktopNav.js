@@ -26,7 +26,7 @@ class DesktopContainer extends Component {
     showFixedMenu = () => this.setState({ fixed: true })
 
     render() {
-        const { children } = this.props
+        const { data, children } = this.props
         const { fixed } = this.state
         return (
             <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
@@ -38,7 +38,11 @@ class DesktopContainer extends Component {
                     <Segment
                         inverted
                         textAlign='center'
-                        className='desktop-menu-segment'
+                        className={!data && 'desktop-menu-segment'}
+                        style={data && {
+                            backgroundImage: `url(${data.thumbnail_url})`,
+                            backgroundSize: 'cover'
+                        }}
                         vertical
                     >
                         <Menu

@@ -1,9 +1,9 @@
 const Fetch = async (url) => {
     const fetchUrl = 'https://cors-anywhere.herokuapp.com/' + url;
 
-    let res = await fetch(fetchUrl);
-    let dab = await res.json();
-    return dab;
+    let result = await fetch(fetchUrl);
+    let response = await result.json();
+    return response;
 }
 
 export default Fetch;

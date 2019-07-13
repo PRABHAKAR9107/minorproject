@@ -87,3 +87,7 @@
 .ui-card{
   overflow: hidden;
 }
+
+.ui.vertical.segment.ui-segment {
+  padding: 10em 6em !important;
+}
