@@ -6,7 +6,7 @@ const Cards = (props) => (
         <Card.Content>
             <Card.Header>{props.items.card_title}</Card.Header>
             <Card.Meta>
-                <span className='date'>Joined in 2015</span>
+                <span className='date'>{props.items.date}</span>
             </Card.Meta>
             <Card.Description>
                 {props.items.excerpt}
@@ -14,9 +14,9 @@ const Cards = (props) => (
         </Card.Content>
         <Card.Content extra>
             <a>
-                <Icon name='user' />
-                22 Friends
-      </a>
+                <Icon name='map marker' />
+                {props.items.taxonomies.destinations[0].name}
+            </a>
         </Card.Content>
 
     </Card>

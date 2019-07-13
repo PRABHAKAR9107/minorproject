@@ -74,6 +74,19 @@
   width: 100%;
 }
 
+.triv-logo-footer {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  padding-bottom: 4px; 
+  color: #fff !important;
+}
+
+.excerpt-title{
+color: rgba(96, 88, 88, 0.728);
+font-size: 1.20em;
+
+}
 .ui.secondary.inverted.pointing.menu {
   /* border-width: 2px; */
   /* border-color: rgba(34,36,38,.15); */
@@ -82,6 +95,11 @@
 
 .ui.doubling.stackable.three.column.grid {
   padding: 0em 2em !important;
+}
+
+.embed-video{
+  height: 500px !important;
+  width: 100%;
 }
 
 .ui-card{

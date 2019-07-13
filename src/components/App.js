@@ -14,6 +14,7 @@ import {
 } from 'semantic-ui-react'
 import Fetch from '../helpers/Fetch'
 import { Link } from 'react-router-dom';
+import logo from '../473a486.svg'
 
 import Cards from './Card'
 import { pathToFileURL } from 'url';
@@ -122,18 +123,18 @@ class HomepageLayout extends React.Component {
                 <Grid.Column width={3}>
                   <Header inverted as='h4' content='Services' />
                   <List link inverted>
-                    <List.Item as='a'>Banana Pre-Order</List.Item>
+                    <List.Item as='a'>Pre-Book Hotel</List.Item>
                     <List.Item as='a'>DNA FAQ</List.Item>
                     <List.Item as='a'>How To Access</List.Item>
-                    <List.Item as='a'>Favorite X-Men</List.Item>
+                    <List.Item as='a'>Search</List.Item>
                   </List>
                 </Grid.Column>
                 <Grid.Column width={7}>
-                  <Header as='h4' inverted>
-                    Footer Header
-              </Header>
+                  <Link to='/'>
+                    <Image src={logo} size='tiny' className='triv-logo-footer'></Image>
+                  </Link>
                   <p>
-                    Extra space for a call to action inside the footer that could help re-engage users.
+                    Chilling out on the bed in your hotel room watching television, while wearing your own pajamas, is sometimes the best part of a vacation.
               </p>
                 </Grid.Column>
               </Grid.Row>

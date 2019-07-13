@@ -10,11 +10,14 @@ import {
     List,
     Segment,
     GridColumn,
+    Embed
 
 } from 'semantic-ui-react'
 import Fetch from '../helpers/Fetch'
 import { Link } from 'react-router-dom'
-import DesktopContainer from './DesktopNav'
+import pretty from 'pretty';
+
+import logo from '../473a486.svg'
 
 class Article extends React.Component {
     constructor(props) {
@@ -23,6 +26,8 @@ class Article extends React.Component {
             data: [],
         }
         this.parseHTML = this.parseHTML.bind(this);
+        this.isParseError = this.isParseError.bind(this);
+        this.getSrc = this.getSrc.bind(this);
     }
     componentDidMount() {
         const parsedJson = Fetch(this.props.location.state.url)
@@ -33,11 +38,37 @@ class Article extends React.Component {
         })
     }
 
-    parseHTML() {
-        let htmlString = this.state.data.content[0].text;
-        let doc = new DOMParser().parseFromString(htmlString, "text/xml");
-        let p = doc.firstChild.children[1];
-        return p.innerHTML;
+    isParseError(parsedDocument) {
+        // parser and parsererrorNS could be cached on startup for efficiency.
+        var parser = new DOMParser(),
+            errorneousParse = parser.parseFromString('<', 'text/xml'),
+            parsererrorNS = errorneousParse.getElementsByTagName("parsererror")[0].namespaceURI;
+
+        if (parsererrorNS === 'http://www.w3.org/1999/xhtml') {
+            return parsedDocument.getElementsByTagName("parsererror").length > 0;
+        }
+
+        return parsedDocument.getElementsByTagNameNS(parsererrorNS, 'parsererror').length > 0;
+    };
+
+    parseHTML(value) {
+        let p;
+        let htmlString = pretty(value);
+        let doc = new DOMParser().parseFromString(htmlString, "text/html");
+        if (this.isParseError(doc)) {
+            console.log('parsing error')
+            p = doc.firstChild.children[1]
+            return p.innerHTML;
+        }
+        p = doc.firstChild;
+        return p.textContent;
+    }
+
+    getSrc(embed) {
+        var str = embed;
+        var regex = /<iframe.*?src='(.*?)'/g;
+        var src = regex.exec(str)[1];
+        return src;
     }
 
     render() {
@@ -51,15 +82,26 @@ class Article extends React.Component {
                                     {this.state.data.title}
                                 </Header>
                                 {this.state.data.content ? (
+                                    <p className='excerpt-title'>
+                                        {this.parseHTML(this.state.data.content[1].text)}
+                                    </p>
+                                )
+                                    : null}
+                                {this.state.data.content ? (
                                     <p className='para-layout'>
-                                        {this.parseHTML()}
+                                        {this.parseHTML(this.state.data.content[0].text)}
                                     </p>
                                 )
                                     : null}
 
                             </Grid.Column>
                             <Grid.Column floated='right' width={6}>
-                                <Image bordered rounded size='large' src='/images/wireframe/white-image.png' />
+                                {this.state.data.content ? (
+                                    <div>
+                                        <Embed placeholder={this.state.data.thumbnail.url} className='embed-video' url={() => this.getSrc(this.state.data.content[2].text)} autoplay={true}></Embed>
+                                    </div>
+                                )
+                                    : null}
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -138,19 +180,19 @@ class Article extends React.Component {
                                 <Grid.Column width={3}>
                                     <Header inverted as='h4' content='Services' />
                                     <List link inverted>
-                                        <List.Item as='a'>Banana Pre-Order</List.Item>
+                                        <List.Item as='a'>Pre-Book Hotel</List.Item>
                                         <List.Item as='a'>DNA FAQ</List.Item>
                                         <List.Item as='a'>How To Access</List.Item>
-                                        <List.Item as='a'>Favorite X-Men</List.Item>
+                                        <List.Item as='a'>Search</List.Item>
                                     </List>
                                 </Grid.Column>
                                 <Grid.Column width={7}>
-                                    <Header as='h4' inverted>
-                                        Footer Header
-                  </Header>
+                                    <Link to='/'>
+                                        <Image src={logo} size='tiny' className='triv-logo-footer'></Image>
+                                    </Link>
                                     <p>
-                                        Extra space for a call to action inside the footer that could help re-engage users.
-                  </p>
+                                        Chilling out on the bed in your hotel room watching television, while wearing your own pajamas, is sometimes the best part of a vacation.
+              </p>
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>
