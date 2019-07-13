@@ -10,7 +10,8 @@ import {
     List,
     Segment,
     GridColumn,
-    Embed
+    Embed,
+    Rating
 
 } from 'semantic-ui-react'
 import Fetch from '../helpers/Fetch'
@@ -24,10 +25,18 @@ class Article extends React.Component {
         super(props);
         this.state = {
             data: [],
+            rating: null,
+            id: props.location.state.id
         }
         this.parseHTML = this.parseHTML.bind(this);
         this.isParseError = this.isParseError.bind(this);
         this.getSrc = this.getSrc.bind(this);
+        this.handleRate = this.handleRate.bind(this);
+        this.ratingmap = {
+            id: {
+
+            }
+        }
     }
     componentDidMount() {
         const parsedJson = Fetch(this.props.location.state.url)
@@ -66,9 +75,13 @@ class Article extends React.Component {
 
     getSrc(embed) {
         var str = embed;
-        var regex = /<iframe.*?src='(.*?)'/g;
+        var regex = /<iframe.*?src="(.*?)"/g;
         var src = regex.exec(str)[1];
         return src;
+    }
+
+    handleRate(e, { rating, maxRating }) {
+        this.setState({ rating, maxRating })
     }
 
     render() {
@@ -96,12 +109,18 @@ class Article extends React.Component {
 
                             </Grid.Column>
                             <Grid.Column floated='right' width={6}>
-                                {this.state.data.content ? (
+                                {this.state.data.content && this.state.data.content[2].content && (
                                     <div>
-                                        <Embed placeholder={this.state.data.thumbnail.url} className='embed-video' url={() => this.getSrc(this.state.data.content[2].text)} autoplay={true}></Embed>
+                                        <Embed placeholder={this.state.data.content[3].blocks[1].posts[2].thumbnail_url} className='embed-video' url={this.getSrc(this.state.data.content[2].content)} autoplay={true}></Embed>
                                     </div>
-                                )
-                                    : null}
+                                )}
+                                {this.state.data.content && this.state.data.content[2].gallery && (
+                                    <div>
+                                        <Image bordered rounded size='huge' src={this.state.data.content[2].gallery[0].url} />
+                                    </div>
+                                )}
+                                <Header as='h2'>Rate Us:</Header>
+                                <Rating maxRating={5} onRate={this.handleRate} icon='star' size='huge' clearable={true} defaultRating={this.state.rating} />
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>

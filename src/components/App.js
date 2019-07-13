@@ -17,13 +17,13 @@ import { Link } from 'react-router-dom';
 import logo from '../473a486.svg'
 
 import Cards from './Card'
-import { pathToFileURL } from 'url';
 
 class HomepageLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       data: [],
+      rating: null
     };
   }
 
@@ -35,6 +35,7 @@ class HomepageLayout extends React.Component {
       })
     })
   }
+
   render() {
     return (
       <ResponsiveContainer>
@@ -42,7 +43,7 @@ class HomepageLayout extends React.Component {
           <Grid columns={3} doubling stackable>
             {this.state.data.map((item, i) => (
               <Grid.Column>
-                <Link to={{ pathname: `/article/${item.id}`, state: { url: `${item.uri}` } }}>
+                <Link to={{ pathname: `/article/${item.id}`, state: { url: `${item.uri}`, id: `${item.id}` } }}>
                   <Cards items={item} />
                 </Link>
               </Grid.Column>
